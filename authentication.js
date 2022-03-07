@@ -46,9 +46,9 @@ authentication.post('/register', (req, res) => {
         
         var account = collection.findOne({'email': req.body.email})
 
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(req.body.password, salt, (err, hash) => {
-                if (!account) {
+        if (!account) {
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
                     var credentials = {
                         'firstName': req.body.firstName,
                         'lastName': req.body.lastName,
@@ -57,14 +57,14 @@ authentication.post('/register', (req, res) => {
                         'twoFactorAuth': false
                     }
                     collection.insertOne(credentials, () => { client.close() })
-                }
-                
-                res.render('registration', { 'emailAlreadyExist': true, 'firstName': req.body.firstName, 'lastName': req.body.lastName, 'email': req.body.email }) 
+                    res.redirect('/dashboard')
+                })
             })
-        })
+        }
+        else {
+            res.render('registration', { 'emailAlreadyExist': true, 'firstName': req.body.firstName, 'lastName': req.body.lastName, 'email': req.body.email }) 
+        }
     })
-
-    res.redirect('/dashboard')
 })
 
 module.exports = authentication
