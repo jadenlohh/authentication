@@ -31,73 +31,38 @@
 <body>
     <div class="row justify-content-center ms-0 me-0" style="height: 100vh;">
         <div class="col-md-5 col-sm-12 my-auto rounded">
-            <% if (emailAlreadyExist) { %>
-                <form action="/register" method="post" class="px-5 py-5" id="registrationForm">
-                    <div class="mb-5">
-                        <h4 style="font-family: 'Be Vietnam Pro', sans-serif;">Sign up with your email</h4>
-                        <p>Already have an account? <a href="/login">Sign in</a></p>
-                    </div>
-        
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control shadow-none" name="firstName" placeholder="First Name" value="<%= firstName %>" required>
-                        <label for="firstName">First Name</label>
-                    </div>
-        
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control shadow-none" name="lastName" placeholder="Last Name" value="<%= lastName %>" required>
-                        <label for="lastName">Last Name</label>
-                    </div>
-        
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control shadow-none" name="email" placeholder="test@email.com" value="<%= email %>" style="border: 1px solid red;" required>
-                        <label for="email">Email</label>
-                    </div>
-            
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control shadow-none" name="password" id="password" placeholder="Password" required>
-                        <label for="password">Password</label>
+            <form action="/register" method="post" class="px-5 py-5" id="registrationForm">
+                <div class="mb-5">
+                    <h4 style="font-family: 'Be Vietnam Pro', sans-serif;">Sign up with your email</h4>
+                    <p>Already have an account? <a href="/login">Sign in</a></p>
+                </div>
     
-                        <p class="form-text" id="pwd-errMsg" style="color: red;">
-                            The email provided is already registered
-                        </p>
-                    </div>
-            
-                    <button type="submit" class="btn btn-primary shadow-none mb-3 w-100" style="padding: 12px;">Create an account</button>
-                </form>
-            <% } else { %>
-                <form action="/register" method="post" class="px-5 py-5" id="registrationForm">
-                    <div class="mb-5">
-                        <h4 style="font-family: 'Be Vietnam Pro', sans-serif;">Sign up with your email</h4>
-                        <p>Already have an account? <a href="/login">Sign in</a></p>
-                    </div>
-        
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control shadow-none" name="firstName" placeholder="First Name" required>
-                        <label for="firstName">First Name</label>
-                    </div>
-        
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control shadow-none" name="lastName" placeholder="Last Name" required>
-                        <label for="lastName">Last Name</label>
-                    </div>
-        
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control shadow-none" name="email" placeholder="test@email.com" required>
-                        <label for="email">Email</label>
-                    </div>
-            
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control shadow-none" name="password" id="password" placeholder="Password" required>
-                        <label for="password">Password</label>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control shadow-none" name="firstName" placeholder="First Name" required>
+                    <label for="firstName">First Name</label>
+                </div>
     
-                        <p class="form-text" id="pwd-errMsg" style="color: red;display: none;">
-                            Your password must 8 characters long with a mix of numbers, uppercase and lowercase letters
-                        </p>
-                    </div>
-            
-                    <button type="submit" class="btn btn-primary shadow-none mb-3 w-100" style="padding: 12px;">Create an account</button>
-                </form>
-            <% } %>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control shadow-none" name="lastName" placeholder="Last Name" required>
+                    <label for="lastName">Last Name</label>
+                </div>
+    
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control shadow-none" name="email" placeholder="test@email.com" required>
+                    <label for="email">Email</label>
+                </div>
+        
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control shadow-none" name="password" id="password" placeholder="Password" required>
+                    <label for="password">Password</label>
+
+                    <p class="form-text" id="pwd-errMsg" style="color: red;display: none;">
+                        Your password must 8 characters long with a mix of numbers, uppercase and lowercase letters
+                    </p>
+                </div>
+        
+                <button type="submit" class="btn btn-primary shadow-none mb-3 w-100" style="padding: 12px;">Create an account</button>
+            </form>
         </div>
     </div>
 
