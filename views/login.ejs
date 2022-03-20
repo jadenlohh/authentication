@@ -24,13 +24,26 @@
 <body>
     <div class="row justify-content-center ms-0 me-0" style="height: 100vh;">
         <div class="col-md-5 col-sm-12 my-auto rounded">
-            <% if (failedAuth) { %>
-                <form action="/login" method="post" class="px-5 py-5">
-                    <div class="mb-5">
-                        <h4 style="font-family: 'Be Vietnam Pro', sans-serif;">Welcome back!</h4>
-                        <p>Don't have an account? <a href="/register">Sign up</a></p>
+            <form action="/login" method="post" class="px-5 py-5">
+                <div class="mb-5">
+                    <h4 style="font-family: 'Be Vietnam Pro', sans-serif;">Welcome back!</h4>
+                    <p>Don't have an account? <a href="/register">Sign up</a></p>
+                </div>
+
+                <% if (typeof error == 'undefined') { %>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control shadow-none" name="email" id="email" placeholder="test@email.com" required>
+                        <label for="email">Email</label>
                     </div>
-        
+            
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control shadow-none" name="password" id="password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                    </div>
+            
+                    <button type="submit" class="btn btn-primary shadow-none mb-3 w-100" style="padding: 12px;">Login</button>
+                    
+                <% } else { %>
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control shadow-none" name="email" id="email" placeholder="test@email.com" value="<%= email %>" style="border: 1px solid red;">
                         <label for="email">Email</label>
@@ -44,27 +57,8 @@
                     </div>
             
                     <button type="submit" class="btn btn-primary shadow-none mb-3 w-100" style="padding: 12px;">Login</button>
-                </form>
-            <% } else { %>
-                <form action="/login" method="post" class="px-5 py-5">
-                    <div class="mb-5">
-                        <h4 style="font-family: 'Be Vietnam Pro', sans-serif;">Welcome back!</h4>
-                        <p>Don't have an account? <a href="/register">Sign up</a></p>
-                    </div>
-        
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control shadow-none" name="email" id="email" placeholder="test@email.com" required>
-                        <label for="email">Email</label>
-                    </div>
-            
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control shadow-none" name="password" id="password" placeholder="Password" required>
-                        <label for="password">Password</label>
-                    </div>
-            
-                    <button type="submit" class="btn btn-primary shadow-none mb-3 w-100" style="padding: 12px;">Login</button>
-                </form>
-            <% } %>
+                <% } %>
+            </form>
         </div>
     </div>
 
