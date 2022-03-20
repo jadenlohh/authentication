@@ -54,7 +54,7 @@ app.post("/dashboard", (req, res) => {
 });
 
 
-app.get("logout", (req, res) => {
+app.get("/logout", (req, res) => {
     res.clearCookie("token");
     res.redirect("/login");
 });
