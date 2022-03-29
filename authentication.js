@@ -19,9 +19,9 @@ router.get("/login", (req, res) => {
 
 router.post("/login", (req, res) => {
     client.connect((err) => {
-        const collection = client.db("passkeeper").collection("credentials");
+        const collection = client.db("authentication").collection("credentials");
 
-        collection.findOne({ "email": req.body.email }, (err, account) => {
+        collection.findOne({ "_id": req.body.email }, (err, account) => {
             if (account) {
                 bcrypt.compare(req.body.password, account.password, (err, validPwd) => {
                     if (validPwd) {
@@ -50,32 +50,31 @@ router.get("/register", (req, res) => {
 
 router.post("/register", (req, res) => {
     client.connect((err) => {
-        const collection = client.db("passkeeper").collection("credentials");
+        const collection = client.db("authentication").collection("credentials");
         var { firstName, lastName, email, password} = req.body;
 
-        var account = collection.findOne({ "email": req.body.email });
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(password, salt, (err, hash) => {
+                var credentials = {
+                    '_id': email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    password: hash,
+                    twoFactorAuth: false,
+                };
 
-        if (account) {
-            res.render("registration", { "error": "AccountAlreadyExist", "firstName": firstName, "lastName": lastName, "email": email });
-        }
-        else {
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(password, salt, (err, hash) => {
-                    var credentials = {
-                        firstName: firstName,
-                        lastName: lastName,
-                        email: email,
-                        password: hash,
-                        twoFactorAuth: false,
+                collection.insertOne(credentials, (err, result) => {
+                    if (err) {
+                        res.render("registration", { "error": "AccountAlreadyExist", "firstName": firstName, "lastName": lastName, "email": email });
+
+                    }
+                    else {
+                        res.cookie("token", jwt.sign({ "email": req.body.email }, "secret", { expiresIn: "3d" }));
+                        res.redirect("/dashboard");
                     };
-    
-                    collection.insertOne(credentials);
                 });
             });
-
-            res.cookie("token", jwt.sign({ "email": req.body.email }, "secret", { expiresIn: "3d" }));
-            res.redirect("/dashboard");
-        };
+        });
     });
 });
 

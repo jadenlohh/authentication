@@ -24,10 +24,10 @@ app.get("/dashboard", (req, res) => {
 
         jwt.verify(req.cookies.token, "secret", (err, payload) => {
             client.connect(err => {
-                const collection = client.db("passkeeper").collection("credentials");
+                const collection = client.db("authentication").collection("credentials");
 
-                collection.findOne({"email": payload.email}, (err, account) => {
-                    res.render("dashboard", { "firstName": account.firstName, "lastName": account.lastName, "email": account.email });
+                collection.findOne({"_id": payload.email}, (err, account) => {
+                    res.render("dashboard", { "firstName": account.firstName, "lastName": account.lastName, "email": account._id });
                 });
             });
         });
@@ -40,14 +40,14 @@ app.get("/dashboard", (req, res) => {
 
 app.post("/dashboard", (req, res) => {
     client.connect(err => {
-        const collection = client.db("passkeeper").collection("credentials");
+        const collection = client.db("authentication").collection("credentials");
         var updateCredentials = { $set: {"firstName": req.body.firstName, "lastName": req.body.lastName} };
 
         jwt.verify(req.cookies.token, "secret", (err, payload) => {
-            collection.updateOne({"email": payload.email}, updateCredentials);
+            collection.updateOne({"_id": payload.email}, updateCredentials);
 
-            collection.findOne({"email": payload.email}, (err, result) => {
-                res.render("dashboard", { "firstName": result.firstName, "lastName": result.lastName, "email": result.email, "updatedCredentials": true });
+            collection.findOne({"_id": payload.email}, (err, result) => {
+                res.render("dashboard", { "firstName": result.firstName, "lastName": result.lastName, "email": result._id, "updatedCredentials": true });
             });
         });
     });
